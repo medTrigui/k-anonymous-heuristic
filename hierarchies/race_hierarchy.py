@@ -5,26 +5,25 @@ Based on data analysis:
 - 5 unique race categories
 - Distribution: White (27,816), Black (3,124), Asian-Pac-Islander (1,039), 
   Amer-Indian-Eskimo (311), Other (271)
-- Sensitive attribute requiring careful generalization
+- Highly sensitive attribute requiring ethical generalization
 
 Hierarchy Design Principles:
-1. Respect demographic/cultural significance
-2. Handle majority vs minority distinctions appropriately  
-3. Maintain statistical utility while protecting privacy
-4. Consider US Census categorizations
+1. Avoid any potentially biased or discriminatory groupings
+2. Immediate generalization to "Person" to eliminate racial distinctions
+3. Prioritize privacy and ethical considerations over statistical utility
+4. Recognize that any intermediate racial grouping risks perpetuating bias
 """
 
 class RaceHierarchy:
     def __init__(self):
-        self.max_level = 3  # Shorter hierarchy due to sensitivity and fewer categories
+        self.max_level = 2  # Simplified hierarchy due to ethical concerns
         
     def get_hierarchy_levels(self):
         """Returns the complete race hierarchy definition"""
         return {
             0: "specific",               # Original 5 categories
-            1: "ethnic_group",           # 3 categories: White, Asian, Other-Minority
-            2: "majority_minority",      # 2 categories: White, Non-White
-            3: "suppressed"              # * (completely suppressed)
+            1: "person",                 # Single category: Person
+            2: "suppressed"              # * (completely suppressed)
         }
     
     def generalize(self, race, target_level):
@@ -33,7 +32,7 @@ class RaceHierarchy:
         
         Args:
             race (str): Original race value
-            target_level (int): Target generalization level (0-3)
+            target_level (int): Target generalization level (0-2)
             
         Returns:
             str: Generalized race representation
@@ -42,24 +41,10 @@ class RaceHierarchy:
             return race
         
         elif target_level == 1:
-            # Ethnic group classification (3 categories)
-            if race == "White":
-                return "White"
-            elif race == "Asian-Pac-Islander":
-                return "Asian"
-            elif race in ["Black", "Amer-Indian-Eskimo", "Other"]:
-                return "Other-Minority"
-            else:
-                return "Other-Minority"  # Default fallback
+            # All races generalized to "Person" to avoid bias
+            return "Person"
         
         elif target_level == 2:
-            # Majority vs minority classification (2 categories)
-            if race == "White":
-                return "White"
-            else:  # All non-White categories
-                return "Non-White"
-        
-        elif target_level == 3:
             return "*"  # Completely suppressed
         
         else:
@@ -75,10 +60,8 @@ class RaceHierarchy:
         if target_level == 0:
             return 0.0
         elif target_level == 1:
-            return 0.4   # Ethnic groups (5->3 categories)
+            return 0.8   # All races -> Person (significant loss but ethically necessary)
         elif target_level == 2:
-            return 0.7   # Majority/minority (5->2 categories)
-        elif target_level == 3:
             return 1.0   # Suppressed
         else:
             raise ValueError(f"Invalid hierarchy level: {target_level}")
@@ -90,17 +73,7 @@ class RaceHierarchy:
         """
         if generalized_value == "*":
             return 5  # All categories
-        elif generalized_value in ["White", "Non-White"]:
-            if generalized_value == "White":
-                return 1  # Just White
-            else:  # Non-White
-                return 4  # Black, Asian-Pac-Islander, Amer-Indian-Eskimo, Other
-        elif generalized_value in ["White", "Asian", "Other-Minority"]:
-            if generalized_value == "White":
-                return 1  # White
-            elif generalized_value == "Asian":
-                return 1  # Asian-Pac-Islander
-            else:  # Other-Minority
-                return 3  # Black, Amer-Indian-Eskimo, Other
+        elif generalized_value == "Person":
+            return 5  # All 5 original categories represented
         else:
             return 1  # Specific category
