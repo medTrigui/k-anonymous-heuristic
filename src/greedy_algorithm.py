@@ -1,11 +1,11 @@
+cd ..
 """
-K-Anonymity Implementation for Adult Dataset
+K-Anonymity Implementation - GREEDY VERSION
+Original greedy approach that generalizes one QI at a time until complete suppression
 
-Master's thesis implementation of k-anonymity algorithm using generalization hierarchies.
-Supports variable k-values per record and minimizes utility loss through greedy heuristics.
-
-Author: Master's Student
+Author: Master's Student  
 Course: Data Privacy
+Implementation: Greedy Algorithm (exhausts one QI before trying others)
 """
 
 import pandas as pd
@@ -19,7 +19,7 @@ sys.path.append('..')
 from hierarchies import HierarchyManager
 
 
-class KAnonymityEngine:
+class KAnonymityEngineGreedy:
     """
     K-Anonymity algorithm implementation with generalization and suppression.
     
@@ -339,7 +339,7 @@ class KAnonymityEngine:
         
         # Export anonymized dataset
         anonymized_df = self.get_anonymized_dataset(df)
-        output_file = os.path.join(output_dir, 'anonymized_dataset.csv')
+        output_file = os.path.join(output_dir, 'greedy_results.csv')
         anonymized_df.to_csv(output_file, index=False)
         
         # Export statistics
@@ -355,14 +355,21 @@ class KAnonymityEngine:
 
 
 def main():
-    """Main execution with sample dataset"""
-    engine = KAnonymityEngine()
+    """Main execution with FULL dataset"""
+    engine = KAnonymityEngineGreedy()
     
-    # Load sample dataset
-    df = engine.load_data('../datasets/adult.data', sample_size=200)
+    # Load FULL dataset (like balanced algorithm)
+    df = engine.load_data('../datasets/adult.data')
     
-    # Set diverse k-values for testing
-    engine.set_k_values(df, {2: 120, 3: 50, 4: 20, 5: 10})
+    # Set diverse k-values for full dataset (proportional distribution)
+    total = len(df)
+    k_values_dist = {
+        2: int(total * 0.7),    # 70% need k=2
+        3: int(total * 0.2),    # 20% need k=3  
+        4: int(total * 0.05),   # 5% need k=4
+        5: int(total * 0.05)    # 5% need k=5
+    }
+    engine.set_k_values(df, k_values_dist)
     
     # Run algorithm
     anonymized_df = engine.anonymize(df)
