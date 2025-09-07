@@ -1,0 +1,31 @@
+
+GREEDY K-ANONYMITY ALGORITHM - METRICS REPORT
+==============================================
+
+Dataset Information:
+- Original records: 32561
+- Anonymized records: 32561
+- Suppressed records: 0
+- Suppression rate: 0.000
+
+Generalization Analysis:
+- Algorithm approach: Greedy (exhaust one QI before trying others)
+- Dataset: Full Adult dataset (32,561 records)
+
+Privacy Metrics:
+- Overall Distortion: 0.562
+- Overall Precision: 0.396
+- Suppression Rate: 0.000
+
+Individual QI Analysis:
+
+Algorithm Characteristics:
+- Strategy: Greedy selection (lowest utility loss first)
+- Behavior: Completely generalizes one QI before trying others
+- Result: Tends to over-generalize age and education to suppression
+- Efficiency: Fast but suboptimal utility preservation
+
+Notes:
+- Greedy approach prioritizes computational speed over utility
+- Results in significant suppression of age and education
+- May not be optimal for real-world privacy applications

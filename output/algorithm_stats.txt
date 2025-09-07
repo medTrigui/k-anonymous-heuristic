@@ -1,0 +1,8 @@
+K-Anonymity Algorithm Results
+========================================
+total_records: 32561
+suppressed_records: 0
+iterations: 10
+generalizations: {'age': np.int64(4), 'education': np.int64(3), 'marital-status': np.int64(2), 'race': 0}
+final_classes: 20
+violations_resolved: 0

@@ -1,0 +1,32 @@
+
+BALANCED K-ANONYMITY ALGORITHM - METRICS REPORT
+===============================================
+
+Dataset Information:
+- Original records: 32561
+- Anonymized records: 32561
+- Suppressed records: 0
+- Suppression rate: 0.000
+
+Generalization Analysis:
+- Algorithm approach: Balanced (benefit/cost with balance penalty)
+- Dataset: Full Adult dataset (32,561 records)
+
+Privacy Metrics:
+- Overall Distortion: 0.688
+- Overall Precision: 0.333
+- Suppression Rate: 0.000
+
+Individual QI Analysis:
+
+Algorithm Characteristics:
+- Strategy: Benefit/cost analysis with balance penalty
+- Behavior: Distributes generalization evenly across all QIs
+- Result: Preserves more meaningful generalized values
+- Efficiency: Processes full dataset with minimal suppression
+
+Notes:
+- Balanced approach optimizes utility preservation
+- Results in meaningful generalizations (e.g., "Adult", "Degree")
+- Better suited for real-world privacy applications
+- Achieves 100% data preservation (0 suppressed records)

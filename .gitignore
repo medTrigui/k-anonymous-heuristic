@@ -43,10 +43,8 @@ ENV/
 ehthumbs.db
 Thumbs.db
 
-# Output files (keep structure but ignore contents)
-output/*.csv
-output/*.txt
-output/results_*
+# Allow important output files to be tracked
+# (Removed CSV and TXT ignoring to include results)
 
 # Temporary files
 *.tmp
